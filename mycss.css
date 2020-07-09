@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+}
+.hidden {
+    display: none !important;
+}
+.bdmsg {
+    font-size: 3.0em;
+    opacity:0;
+}
+#confetti{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+    opacity: 0;
+}
+#btn-container {
+    display:flex;justify-content:center;align-items:center;
+}
+button {
+    padding: 20px 40px;
+    background: none;
+    border: none;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 3px;
+    cursor: pointer;
+    position: absolute;
+    top:50%;
+}
+button:after, button:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 2px solid #000;
+    -webkit-transition: -webkit-transform 2.2s ease-out !important;
+    transition: -webkit-transform 2.2s ease-out !important;
+    transition: transform 2.2s ease-out !important;
+    transition: transform 0.2s ease-out , -webkit-transform 2.2s ease-out  !important;
+}
+button:after {
+    -webkit-transform: translate(3px, 3px);
+            transform: translate(3px, 3px);
+}
+button:before {
+    -webkit-transform: translate(-3px, -3px);
+            transform: translate(-3px, -3px);
+}
+button.clickanimation:after, button.clickanimation:before {
+    -webkit-transform: translate(0);
+            transform: translate(0);
+}
+.col-1 {
+    width: 8.33333%;
+    margin: 0 3px;
+}
+.col-2 {
+    width: 16.66667%;
+    margin: 0 3px;
+}
+.col-3 {
+    width: 25%;
+    margin: 0 3px;
+}
+.col-4 {
+    width: 33.33337%;
+    margin: 0 3px;
+}
+.col-5 {
+    width: 41.66667%;
+    margin: 0 3px;
+}
+.col-6 {
+    width: 50%;
+    margin: 0 3px;
+}
+.col-7 {
+    width: 58.33333%;
+    margin: 0 3px;
+}
+.col-8 {
+    width: 66.66667%;
+    margin: 0 3px;
+}
+.col-9 {
+    width: 75%;
+    margin: 0 3px;
+}
+.col-12 {
+    width: 100%;
+    margin: 0 3px;
+}
+.row {
+    display: flex;
+}
