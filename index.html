@@ -20,7 +20,9 @@
             <div class="col-4" style="display:block;justify-content:center;align-items:center;">
                 <lottie-player style="width: 300px; height: 300px; opacity: 0; margin: 0 auto;" src="https://assets4.lottiefiles.com/private_files/lf30_HaXeAG.json"  background="transparent"  speed="1.02" loop class="hidden" id="lottie-pendulum"></lottie-player>
             </div>
-            <div class="col-4"></div>
+            <div class="col-4">
+                <span id="test-text" class="hidden" style="color:black;">Lorem ipsum dolor sit amet!.</span>
+            </div>
         </div>
         <div id="btn-container">
             <button id="btn_play" onclick="playMusic()">start</button>
@@ -40,6 +42,10 @@
             var pendulum = document.getElementById("lottie-pendulum");
             var btn_start = document.getElementById("btn_play");
             var currentTime;
+            var my_messages = ["Hi babi!!!", "Sorry, I know this isn't much..", "But happy birthday po!\n 🎂🕯🎉", "Thank you for being always there.", "Thank you for never giving up on me.", "Thank you for staying for another year.", "Thank you for always being strong.", "Even when the universe doesn't allow us to be together,","And even when the hardest times are about to come,", "Continue staying. You're a very stronk gril 💪💪💪", "Always stand your ground on the most difficult times.", "You're always worth no matter what.", "I love you 🤗💑❤", "Have a great birthday!"];
+            var my_message_counter = 0;
+            // deleteTextEffect(document.getElementById("test-text"), 100);
+
             function playMusic() {
                 btn_start.classList.add("clickanimation");
                 setTimeout(function() {
@@ -52,7 +58,16 @@
                     fadeIn(pendulum);
                     x.play();
                     greet();
+                    setTimeout(function() {
+                        // typeEffect(document.getElementById("test-text"), 100, 2000)
+                        // my_messages.forEach(await function(item) {
+                        //     typeEffect2(item, 100, 2000);
+                        // });
+                        
+                        typeEffect2();
+                    }, 8500);
                 }, 4000);
+
             }
 
             var playTime = document.getElementById("currentPlayTime");
@@ -107,6 +122,61 @@
                     element.style.filter = 'alpha(opacity=' + op * 100 + ")";
                     op -= op * 0.1;
                 }, fadeTime);
+            }
+
+            function typeEffect(element, speed, deleteDelay = 0, replacementText = "") {
+                var text = (replacementText == "") ? element.innerText : replacementText;
+                element.innerHTML = "";
+                element.classList.remove("hidden");
+                var i = 0;
+                var timer = setInterval(function() {
+                        if (i < text.length) {
+                        element.append(text.charAt(i));
+                        i++;
+                    } else {
+                        clearInterval(timer);
+                        console.log(deleteDelay);
+                        setTimeout(function() {
+                            deleteTextEffect(element, speed - (speed * 0.5))
+                        }, deleteDelay);
+                    }
+                }, speed);
+            }
+
+            function typeEffect2(text, speed = 50, deleteDelay = 5000) {
+                var text = my_messages[my_message_counter];
+                element = document.getElementById("test-text");
+                element.innerHTML = "";
+                element.classList.remove("hidden");
+                var i = 0;
+                var timer = setInterval(function() {
+                        if (i < text.length) {
+                        element.append(text.charAt(i));
+                        i++;
+                    } else {
+                        clearInterval(timer);
+                        console.log(deleteDelay);
+                        setTimeout(function() {
+                            deleteTextEffect(element, speed - (speed * 0.5))
+                        }, deleteDelay);
+                    }
+                }, speed);
+            }
+
+            function deleteTextEffect(element, speed, text) {                
+                var i = element.innerText.length;
+                var timer = setInterval(function() {
+                    if (i != 0) {
+                    element.innerText = element.innerText.slice(0, -1);
+                    i--;
+                    console.log("test");
+                    } else {
+                    clearInterval(timer);
+                    console.log("end of delete");
+                    my_message_counter++;
+                    typeEffect2();
+                    }
+                }, speed);
             }
         </script>
 
