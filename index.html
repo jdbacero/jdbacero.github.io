@@ -21,17 +21,27 @@
                 <lottie-player style="width: 300px; height: 300px; opacity: 0; margin: 0 auto;" src="https://assets4.lottiefiles.com/private_files/lf30_HaXeAG.json"  background="transparent"  speed="1.02" loop class="hidden" id="lottie-pendulum"></lottie-player>
             </div>
             <div class="col-4">
-                <span id="test-text" class="hidden" style="color:black;">Lorem ipsum dolor sit amet!.</span>
+                <span id="test-text" class="hidden" style="color:white; text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; background:rgba(0,0,0,0.4); padding-left: 5px; padding-right: 5px; border-radius: 3px;">Lorem ipsum dolor sit amet!.</span>
             </div>
         </div>
         <div id="btn-container">
             <button id="btn_play" onclick="playMusic()">start</button>
         </div>
-
+        <div class="row hidden" id="image-row">
+            <div class="col-4 image-container" id="img-1">
+                <img src="images/img1.jpg" alt="" id="img1" class="memoriesbringbackmemories">
+            </div>
+            <div class="col-4 image-container" id="img-2">
+                <img src="images/img2.jpg" alt="" id="img2" class="memoriesbringbackmemories">
+            </div>
+            <div class="col-4 image-container" id="img-3">
+                <img src="images/img3.jpg" alt="" id="img3" class="memoriesbringbackmemories">
+            </div>
+        </div>
         <canvas height='1' id='confetti' width='1'></canvas>
 
-        <p class="" id="currentPlayTime" style="color:red;"></p>
-
+        <p class="hidden" id="currentPlayTime" style="color:red;"></p>
+        
         <!-- jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <!-- Lottie -->
@@ -42,8 +52,10 @@
             var pendulum = document.getElementById("lottie-pendulum");
             var btn_start = document.getElementById("btn_play");
             var currentTime;
-            var my_messages = ["Hi babi!!!", "Sorry, I know this isn't much..", "But happy birthday po!\n 🎂🕯🎉", "Thank you for being always there.", "Thank you for never giving up on me.", "Thank you for staying for another year.", "Thank you for always being strong.", "Even when the universe doesn't allow us to be together,","And even when the hardest times are about to come,", "Continue staying. You're a very stronk gril 💪💪💪", "Always stand your ground on the most difficult times.", "You're always worth no matter what.", "I love you 🤗💑❤", "Have a great birthday!"];
+            var my_messages = ["Hi babi!!!", "Sorry, I know this isn't much..", "But happy birthday po!\n 🎂🕯🎉", "Thank you for always being there.", "Thank you for never giving up on me.", "Thank you for staying for another year.", "Thank you for always being strong.", "Even when the universe doesn't allow us to be together,","And even when the hardest times are about to come,", "Continue staying. You're a very stronk gril 💪💪💪", "Always stand your ground on the most difficult times.", "You're always worth no matter what.", "I love you 🤗💑❤", "Have a great birthday!"];
             var my_message_counter = 0;
+            var image_counter = 4;
+            var container_ctr = 1;
             // deleteTextEffect(document.getElementById("test-text"), 100);
 
             function playMusic() {
@@ -63,12 +75,28 @@
                         // my_messages.forEach(await function(item) {
                         //     typeEffect2(item, 100, 2000);
                         // });
-                        
                         typeEffect2();
                     }, 8500);
+                    setTimeout(function() {
+                        fadeIn(document.getElementById("image-row"), 90,"flex");
+                        setInterval(function() {
+                            if (container_ctr > 3) {
+                                container_ctr = 1;
+                            }
+
+                            if (image_counter > 15) {
+                                image_counter = 1;
+                            }
+                            document.getElementById("img"+container_ctr.toString()).src = "images/img"+image_counter.toString()+".jpg";
+
+                            container_ctr++;
+                            image_counter++;
+                        }, 3000);
+                    }, 9000);
                 }, 4000);
 
             }
+
 
             var playTime = document.getElementById("currentPlayTime");
             // var runOnce = false;
@@ -98,9 +126,10 @@
                 },7800);
             }
 
-            function fadeIn(element, fadeTime = 50) {
+            function fadeIn(element, fadeTime = 50, display = "block") {
                 var op = 0.1;  // initial opacity
-                element.style.display = 'block';
+                element.classList.remove("hidden");
+                element.style.display = display;
                 var timer = setInterval(function () {
                     if (op >= 1){
                         clearInterval(timer);
@@ -124,10 +153,10 @@
                 }, fadeTime);
             }
 
-            function typeEffect(element, speed, deleteDelay = 0, replacementText = "") {
-                var text = (replacementText == "") ? element.innerText : replacementText;
+            function typeEffect(message, speed = 50, deleteDelay = 0) {
+                var text = message;
+                element = document.getElementById("test-text");
                 element.innerHTML = "";
-                element.classList.remove("hidden");
                 var i = 0;
                 var timer = setInterval(function() {
                         if (i < text.length) {
@@ -135,10 +164,6 @@
                         i++;
                     } else {
                         clearInterval(timer);
-                        console.log(deleteDelay);
-                        setTimeout(function() {
-                            deleteTextEffect(element, speed - (speed * 0.5))
-                        }, deleteDelay);
                     }
                 }, speed);
             }
@@ -171,10 +196,14 @@
                     i--;
                     console.log("test");
                     } else {
-                    clearInterval(timer);
-                    console.log("end of delete");
-                    my_message_counter++;
-                    typeEffect2();
+                        clearInterval(timer);
+                        console.log("end of delete");
+                        my_message_counter++;
+                        if (my_messages.length != my_message_counter) {
+                            typeEffect2();
+                        } else {
+                            typeEffect("Have a great birthday today, babiii 💗❤💝");
+                        }
                     }
                 }, speed);
             }

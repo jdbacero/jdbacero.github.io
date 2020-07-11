@@ -685,5 +685,7 @@
  
  .txt {
    display: inline;
-   cursor: default;
+   cursor: default;    
+   margin-bottom: -45px;
+   margin-top: -15px;
  }
